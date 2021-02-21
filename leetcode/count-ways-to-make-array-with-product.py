@@ -41,3 +41,4 @@ solution = Solution()
 solution.waysToFillArray(queries)
 
 
+
