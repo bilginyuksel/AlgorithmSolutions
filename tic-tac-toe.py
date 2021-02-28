@@ -82,11 +82,6 @@ class TicTacToe:
         print('Draw!' if winner is None else winner)
         return winner
 
-#class TicTacToeMinMax:
-#
-#    def _findMinMaxScore(self, board, player):
-#        return 10
-
 class TicTacToeComputer(TicTacToe):
 
     def _findMinMaxScore(self, board, turn, player):
@@ -105,7 +100,6 @@ class TicTacToeComputer(TicTacToe):
                     board[i][j] = turn
                     score += self._findMinMaxScore(board, self._nextTurn(turn), player)
                     board[i][j] = '-' 
-        print(score)
         return score
 
 
@@ -116,11 +110,13 @@ class TicTacToeComputer(TicTacToe):
             for j in range(3):
                 if board[i][j] == '-':
                     # is this the best move check
-                    score = self._findMinMaxScore(board.copy(), player, player)
+                    board[i][j] = player;
+                    score = self._findMinMaxScore(board, player, player)
                     if score > bestScore:
                         bestScore = score
                         bestPosition = [i,j]
 
+                    board[i][j] = '-';
 
         x, y = bestPosition
         board[x][y] = player
@@ -134,8 +130,6 @@ class TicTacToeComputer(TicTacToe):
             return self._humanMove(board, turn) 
         return self._computerMove(board, turn)
 
-#game = TicTacToe()
-#game.start()
 game = TicTacToeComputer()
 game.start()
 
