@@ -45,7 +45,7 @@ void AddingArrayElements :: insert(int element) {
     heap.push_back(element);
     int lastIndex = heap.size() - 1;
     
-    while(lastIndex > 0) {
+    while(lastIndex > 0 && heap[lastIndex] > heap[getParentNodeIndex(lastIndex)]) {
         heapify(lastIndex);
         lastIndex = getParentNodeIndex(lastIndex);
     }
