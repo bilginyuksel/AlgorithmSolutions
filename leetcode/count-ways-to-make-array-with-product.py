@@ -11,29 +11,35 @@
 # 6 -- 2 [2] 
 # 3 -- 3 [3] 
 # [1,6]
-class Solution:
-    def findWays(self, query):
-        length, number = query
-        divisors = []
-        for num in range(2, number):
-            if number == 0: break
-            while number>0 and number % num == 0:
-                number //= num
-                divisors.append(num)
 
-        print(divisors)
-        return 1
+from math import comb
+
+class Solution:
+    MOD = (10 ** 9) + 7
+    primes = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97)
+
+    def _find_ways(self, query):
+        ways = 1
+        length, number = query
+
+        for prime in self.primes:
+            current_prime_count = 0
+            while number % prime == 0:
+                number //= prime
+                current_prime_count += 1
+            ways *= comb(length - 1 + current_prime_count, current_prime_count)
+        
+        if number != 1:
+            ways *= length
+        
+        return ways % self.MOD
 
     def waysToFillArray(self, queries):
-        res = []
-        for query in queries:
-            ways = self.findWays(query)
-            res.append(ways)
-        return res
+        return [self._find_ways(query) for query in queries]
 
-queryCount = int(input())
+query_count = int(input())
 queries = []
-for _ in range(queryCount):
+for _ in range(query_count):
     length, number = map(int, input().split())
     queries.append([length, number])
     
