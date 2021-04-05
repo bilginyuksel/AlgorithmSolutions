@@ -18,16 +18,20 @@ class Solution:
     MOD = (10 ** 9) + 7
     primes = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97)
 
+    def _precompute_pascal_triangle(self):
+        pass
+
     def _find_ways(self, query):
         ways = 1
         length, number = query
 
         for prime in self.primes:
-            current_prime_count = 0
+            found_prime_count = 0
             while number % prime == 0:
                 number //= prime
-                current_prime_count += 1
-            ways *= comb(length - 1 + current_prime_count, current_prime_count)
+                found_prime_count += 1
+
+            ways *= comb(length - 1 + found_prime_count, found_prime_count)
         
         if number != 1:
             ways *= length
