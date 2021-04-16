@@ -15,7 +15,7 @@ class MinHeap:
         self.heap = []
 
     def getParentIdx(self, idx):
-        return (idx // 2) - 1
+        return (idx -1) // 2
 
     def getLeftIdx(self, idx):
         return (idx * 2) + 1
@@ -23,9 +23,15 @@ class MinHeap:
     def getRightIdx(self, idx):
         return (idx * 2) + 2
 
+    def swap(self, firstIndex, secondIndex):
+        self.heap[firstIndex], self.heap[secondIndex] = self.heap[secondIdx], self.heap[firstIndex]
+
+    def isEmpty(self):
+        return len(self.heap) == 0
+
     def siftUp(self, childIdx):
         parentIdx = self.getParentIdx(childIdx)
-        while self.heap[parentIdx].val < self.heap[childIdx].val:
+        while parentIdx >= 0 and self.heap[parentIdx].val > self.heap[childIdx].val:
             self.swap(parentIdx, childIdx)
             childIdx = parentIdx
             parentIdx = self.getParentIdx(childIdx)
@@ -58,11 +64,15 @@ class MinHeap:
 
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if len(lists) == 0:
+            return None
+
         queue = MinHeap()
         head = None
         mergedList = head
 
         for i in range(len(lists)):
+            if lists[i] == None: continue
             queue.insert(i, lists[i])
             lists[i] = lists[i].next
 
@@ -75,6 +85,10 @@ class Solution:
             else:
                 head = currentListNode 
                 mergedList = head
+
+            if lists[nextListIdx] is not None:
+                queue.insert(nextListIdx, lists[nextListIdx])
+                lists[nextListIdx] = lists[nextListIdx].next
 
         return head
 
