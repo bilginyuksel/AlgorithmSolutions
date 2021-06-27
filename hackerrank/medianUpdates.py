@@ -2,6 +2,7 @@
 class BaseHeap:
     def __init__(self):
         self.heap = []
+        self.storage = {}
     
     def compare(self, array, firstIdx, secondIdx):
         raise NotImplementedError()
@@ -92,5 +93,6 @@ arr = [10, 8, 5, 7, 12, 9, 2]
 s = MedianUpdateSolution()
 for elem in arr:
     s.append(elem)
-    print(s.minHeap.heap)
-
+    s.maxHeap.insert(elem)
+    print('Min Heap:', s.minHeap.heap)
+    print('Max Heap:', s.maxHeap.heap)
