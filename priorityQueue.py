@@ -1,3 +1,10 @@
+class PriorityQueueNode:
+    def __init__(self, priority) -> None:
+        self.priority = priority
+
+    def __repr__(self) -> str:
+        return str(self.priority)
+
 class PriorityQueue:
 
     def __init__(self, maxQueue=True) -> None:
@@ -11,7 +18,7 @@ class PriorityQueue:
     def isEmpty(self):
         return len(self.queue) == 0
 
-    def insert(self, value):
+    def insert(self, value: PriorityQueueNode):
         self.queue.append(value)
         self._siftUp(len(self.queue)-1)
 
@@ -31,10 +38,10 @@ class PriorityQueue:
         return removedElement
 
     def _maxComparator(self, i, j):
-        return i < j
+        return i.priority < j.priority
 
     def _minComparator(self, i, j):
-        return i > j
+        return i.priority > j.priority
 
     def _getLeftIdx(self, parentIdx):
         return (parentIdx * 2) + 1
@@ -70,3 +77,27 @@ class PriorityQueue:
         if potentialIdx != parentIdx:
             self.swap(potentialIdx, parentIdx)
             self._siftDown(potentialIdx)
+
+class MyNode(PriorityQueueNode):
+    def __init__(self, priority, i, j) -> None:
+        super().__init__(priority)
+        self.i = i
+        self.j = j
+    
+    def __repr__(self) -> str:
+        return str(self.priority) + '-' + str(self.i) + '-' + str(self.j)
+
+def tests():
+    pq = PriorityQueue(maxQueue=False)
+
+    pq.insert(MyNode(5, 1, 2))
+    pq.insert(MyNode(12, 3, 2))
+    pq.insert(MyNode(7, 4, 1))
+    pq.insert(MyNode(18, 5, 2))
+
+    print(pq.remove())
+    print(pq.remove())
+    print(pq.remove())
+    print(pq.remove())
+
+tests()
